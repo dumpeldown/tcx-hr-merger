@@ -1,12 +1,17 @@
 # Garmin TCX HeartRate Merger
-Merge Garmin Watch Heartrate data with a recorded activity!
+A tool to merge passively collected Garmin watch heart rate data with recorded cycling-computer activity, aligning and interpolating missing values using Cubic Spline to generate a unified TCX file.
 ## Purpose
 This Repository searches as a collection of scripts to merge Garmin Hearthrate data with a recorded activity.
-A situation like this might occure when you track your activityusing a Garmin cycling-computer while wearing a Garmin watch, that "passively" records your heartrate.
+A situation like this might occure when you track your activity using a Garmin cycling-computer while wearing a Garmin watch, that "passively" records your heartrate.
 
 ## Goal
 The goal is to merge the heartrate data from the watch with the activity data from the cycling-computer into a single TCX file.
 
+Example heartrate data collected by the watch over a full day:
+![HR passivly collected over full day](./images/daily_hr.png)
+
+Heartrate mapped to the activity data and interpolated using Cubic Spline:
+![HR in Activity](./images/hr_in_activity.png)
 ## Usage
 ### Prerequisites
 - Python 3 is installed
@@ -26,15 +31,21 @@ positional arguments:
 Output:
 ````
 ### Step 1: Converting TCX to CSV ###
-{http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2}
+Original TCX file converted to CSV format as activity.csv
 
 ### Step 2: Adding Heart Rate Data ###
+Searching timestamps from 589 heartrate data points.
+Added approx. 8 heart rate data points to activity.
 CSV file updated and saved as updated_activity.csv
 
 ### Step 3: Interpolating Missing Heart Rate Data ###
+Interpolated 2938 missing heart rate data points.
 Final CSV file with interpolated heart rates saved as final_activity.csv
 
 ### Step 4: Converting CSV Back to TCX ###
+Header written
+Trackpoints written
+Footer written
 Recreated TCX file saved as updated_activity_18356238873.tcx
 
 ### Done! Final TCX file saved as updated_activity_18356238873.tcx ###
@@ -50,7 +61,7 @@ See `python3 addHR2tcx.py --help` for more information.
 4. The iso-timestamps are truncated to remove seconds, as the watch passivly only reports the heartrate every 2 minutes.
 5. The timestamps are matches with the timestamps of the activity data.
 6. The heartrate data is added to the CSV file.
-7. Missing heartrate data is linearly interpolated and added to the CSV, see `interpHR.py` for the interpolation function.
+7. Missing heartrate data is interpolated using [Cubic Spline](https://mathworld.wolfram.com/CubicSpline.html) and added to the CSV, see `interpHR.py` for the interpolation implementation.
 8. The CSV file is converted back to TCX. The original XML headers and footers are copied to the new TCX file, keeping the metadata intact.
 
 ## Acknowledgements
