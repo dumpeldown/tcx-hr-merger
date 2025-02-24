@@ -39,7 +39,7 @@ def csv_to_tcx_trackpoints(csv_file):
             <AltitudeMeters>{row['AltitudeMeters']}</AltitudeMeters>
             <DistanceMeters>{row['DistanceMeters']}</DistanceMeters>
             <HeartRateBpm>
-                <Value>{row['heartratebpm/value']}</Value>
+                <Value>{row['heartrate']}</Value>
             </HeartRateBpm>
             <Extensions>
                 <ns3:TPX xmlns:ns3="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -59,8 +59,11 @@ def recreate_tcx(original_tcx, csv_file, output_tcx):
 
     with open(output_tcx, "w", encoding="utf-8") as file:
         file.write(header_xml + "\n")  # Write header
+        print("Header written")
         file.write(trackpoints_xml + "\n")  # Insert trackpoints from CSV
+        print("Trackpoints written")
         file.write(footer_xml)  # Append footer
+        print("Footer written")
 
     print(f"Recreated TCX file saved as {output_tcx}")
 
