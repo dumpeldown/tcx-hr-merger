@@ -38,12 +38,14 @@ def csv_to_tcx_trackpoints(csv_file):
             </Position>
             <AltitudeMeters>{row['AltitudeMeters']}</AltitudeMeters>
             <DistanceMeters>{row['DistanceMeters']}</DistanceMeters>
+            <Cadence>{row['Cadence']}</Cadence>
             <HeartRateBpm>
                 <Value>{row['heartrate']}</Value>
             </HeartRateBpm>
             <Extensions>
                 <ns3:TPX xmlns:ns3="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
                     <ns3:Speed>{row['Speed']}</ns3:Speed>
+                    <ns3:Watts>{row['Watts']}</ns3:Watts>
                 </ns3:TPX>
             </Extensions>
         </Trackpoint>

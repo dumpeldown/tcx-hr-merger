@@ -65,24 +65,32 @@ def main(input, output):
                 except:
                     distance = ''
                 try:
+                    cadence = trackpoint.find(ns + 'Cadence').text.strip()
+                except:
+                    cadence = ''
+                try:
                     extensions = trackpoint.find(ns + 'Extensions')
                     if extensions is not None:
                         tpx = extensions.find('.//ns3:TPX', {'ns3': 'http://www.garmin.com/xmlschemas/ActivityExtension/v2'})
                         if tpx is not None:
                             speed = tpx.find('ns3:Speed', {'ns3': 'http://www.garmin.com/xmlschemas/ActivityExtension/v2'}).text.strip()
+                            watts = tpx.find('ns3:Watts', {'ns3': 'http://www.garmin.com/xmlschemas/ActivityExtension/v2'}).text.strip()
                         else:
                             speed = ''
+                            watts = ''
                     else:
                         speed = ''
+                        watts = ''
                 except:
                     speed = ''
+                    watts = ''
 
                 if not columnsEstablished:
                     fout = open(output, 'w')
-                    fout.write(','.join(('Time', 'LatitudeDegrees', 'LongitudeDegrees', 'AltitudeMeters', 'heartrate', 'DistanceMeters', 'Speed')) + '\n')
+                    fout.write(','.join(('Time', 'LatitudeDegrees', 'LongitudeDegrees', 'AltitudeMeters', 'Cadence', 'heartrate', 'DistanceMeters', 'Speed', 'Watts')) + '\n')
                     columnsEstablished = True
                 
-                fout.write(','.join((time, latitude, longitude, altitude, bpm, distance, speed)) + '\n')
+                fout.write(','.join((time, latitude, longitude, altitude,cadence, bpm, distance, speed, watts)) + '\n')
 
     fout.close()
     print(f"Original TCX file converted to CSV format as {output}")
