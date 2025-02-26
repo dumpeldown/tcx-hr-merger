@@ -49,7 +49,7 @@ def update_csv_with_hr(csv_file, hr_json, updated_csv):
                     del hr_dict[rounded_csv_time]
             writer.writerow(row)
         print(f"Searching timestamps from {len(hr_dict)} heartrate data points.")
-        print(f"Added approx. {int(number_of_added_hr/12)} heart rate data points to activity.")
+        print(f"Added approx. {int(number_of_added_hr)} heart rate data points to activity.")
     print(f"CSV file updated and saved as {updated_csv}")
 
 if __name__ == "__main__":
