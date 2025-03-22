@@ -13,6 +13,8 @@ Example heartrate data collected by the watch over a full day:
 Heartrate mapped to the activity data and interpolated using Cubic Spline:
 ![HR in Activity](./images/hr_in_activity.png)
 ## Usage
+
+Check out a quick run-down of the process in this video I made: [YT: Merging passive Garmin HR data with tcx activity using Python] (https://youtu.be/_WuE4nTh9CE)
 ### Prerequisites
 - Python 3 is installed
 - Obtain the heartrate data from the watch as a .json file. This can be done by exporting the activity from the Garmin Connect website. Curently, the heartrate data can only be obtained manually. Navigate to https://connect.garmin.com/modern/heart-rate/2025-02-23/0 (replace with your activity date), open the deveoper console (F12), go to network tab, reload the page and search for ``dailyheartrate`` in the network requests. Go to the response tab and copy the `heartRateValues` value. Finally, save the value to a .json file.
