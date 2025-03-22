@@ -3,7 +3,7 @@ import subprocess
 
 def run_script(script, *args):
     """Helper function to execute Python scripts with arguments."""
-    command = ["python3", script] + list(args)
+    command = ["python", script] + list(args)
     result = subprocess.run(command, capture_output=True, text=True)
     if result.returncode != 0:
         print(f"Error running {script}: {result.stderr}")

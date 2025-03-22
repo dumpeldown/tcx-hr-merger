@@ -29,29 +29,37 @@ def csv_to_tcx_trackpoints(csv_file):
     with open(csv_file, "r", encoding="utf-8") as file:
         reader = csv.DictReader(file)
         for row in reader:
-            trackpoint = f"""
-        <Trackpoint>
-            <Time>{row['Time']}</Time>
+            position_xml = ""
+            if row['LatitudeDegrees'].strip() and row['LongitudeDegrees'].strip():
+                position_xml = f"""
             <Position>
                 <LatitudeDegrees>{row['LatitudeDegrees']}</LatitudeDegrees>
                 <LongitudeDegrees>{row['LongitudeDegrees']}</LongitudeDegrees>
-            </Position>
+            </Position>"""
+
+            cadence_xml = f"\n            <Cadence>{row['Cadence']}</Cadence>" if row['Cadence'].strip() else ""
+
+            watts_xml = f"\n                    <ns3:Watts>{row['Watts']}</ns3:Watts>" if row['Watts'].strip() else ""
+
+            trackpoint = f"""
+        <Trackpoint>
+            <Time>{row['Time']}</Time>
+            {position_xml}
             <AltitudeMeters>{row['AltitudeMeters']}</AltitudeMeters>
-            <DistanceMeters>{row['DistanceMeters']}</DistanceMeters>
-            <Cadence>{row['Cadence']}</Cadence>
+            <DistanceMeters>{row['DistanceMeters']}</DistanceMeters>{cadence_xml}
             <HeartRateBpm>
                 <Value>{row['heartrate']}</Value>
             </HeartRateBpm>
             <Extensions>
                 <ns3:TPX xmlns:ns3="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
-                    <ns3:Speed>{row['Speed']}</ns3:Speed>
-                    <ns3:Watts>{row['Watts']}</ns3:Watts>
+                    <ns3:Speed>{row['Speed']}</ns3:Speed>{watts_xml}
                 </ns3:TPX>
             </Extensions>
         </Trackpoint>
         """
             trackpoints_xml.append(trackpoint.strip())
     return "\n".join(trackpoints_xml)
+
 
 # Main function to recreate the TCX file
 def recreate_tcx(original_tcx, csv_file, output_tcx):

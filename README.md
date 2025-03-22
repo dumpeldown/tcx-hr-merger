@@ -17,7 +17,7 @@ Heartrate mapped to the activity data and interpolated using Cubic Spline:
 - Python 3 is installed
 - Obtain the heartrate data from the watch as a .json file. This can be done by exporting the activity from the Garmin Connect website. Curently, the heartrate data can only be obtained manually. Navigate to https://connect.garmin.com/modern/heart-rate/2025-02-23/0 (replace with your activity date), open the deveoper console (F12), go to network tab, reload the page and search for ``dailyheartrate`` in the network requests. Go to the response tab and copy the `heartRateValues` value. Finally, save the value to a .json file.
 - Obtain the activity data from the cycling-computer as a .tcx file. This can be done by exporting the activity from the Garmin Connect website.
-- Run `python3 mergeHR2tcx.py` with the parameters:
+- Run `python mergeHR2tcx.py` with the parameters:
 ````
 positional arguments:
   original_tcx  The original TCX file
@@ -26,7 +26,7 @@ positional arguments:
 ````
 
 ### Example
-`python3 mergeHR2tcx.py activity_18356238873.tcx hr.json updated_activity_18356238873.tcx`
+`python mergeHR2tcx.py activity_18356238873.tcx hr.json updated_activity_18356238873.tcx`
 
 Output:
 ````
@@ -52,7 +52,7 @@ Recreated TCX file saved as updated_activity_18356238873.tcx
 ````
 
 
-See `python3 addHR2tcx.py --help` for more information.
+See `python addHR2tcx.py --help` for more information.
 
 ## How it works
 1. The original TCX file is converted to a CSV file.
